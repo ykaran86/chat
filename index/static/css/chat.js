@@ -14,6 +14,7 @@ $('#chat-form').on('submit', function(event){
 	});
 });
 
+
 function getMessage(){
 	if(!scrolling){
 		$.get('/messages/', function(messages){
@@ -33,6 +34,7 @@ $(function(){
 });
 
 $(document).ready(function(){
+	
 	$('#send').attr('disabled', 'disabled');
 	$('#chat-msg').keyup(function(){
 		if($(this).val() != ''){

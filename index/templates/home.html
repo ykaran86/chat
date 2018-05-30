@@ -2,8 +2,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<meta http-equiv="refresh" content="5">
 		<title>{% block title %}User Registration{% endblock %}</title>
+            <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
         	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -11,7 +11,7 @@
         	
 		<script	 src="{% static 'css/chat.js' %}"></script>
 	</head>
-	<body>
+	<body onload='window.scrollBy(0, off.top)'>
 	<header>
 		<h1>My Site</h1>
 		{% if user.is_authenticated %}
@@ -54,15 +54,25 @@
 		</div>
 	</form>
 	<div id="down"></div>
-<script>
-$(document).ready(function () {
-    // Handler for .ready() called.
-    $('html, body').animate({
-        scrollTop: $('#down').offset().top
-    }, 'slow');
-});
-
-</script>
 	</main>
+	<script type="text/javascript">
+	var myVar;
+myVar=setTimeout(function() {
+  location.reload();
+}, 5000);
+	$('#chat-msg').keyup(function(){
+		if($(this).val() != ''){
+			clearTimeout(myVar);
+		}
+		else{
+			myVar=setTimeout(function() {
+  location.reload();
+}, 5000);
+		}
+	}) ;
+</script>
 	</body>
+<script>
+	var off=$('#down').offset();
+</script>
 </html>
