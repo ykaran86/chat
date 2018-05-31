@@ -8,8 +8,6 @@
         	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
         	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        	
-		<script	 src="{% static 'css/chat.js' %}"></script>
 	</head>
 	<body onload='window.scrollBy(0, off.top)'>
 	<header>
@@ -21,7 +19,6 @@
 		{% endif %}
 		<hr>
 	</header>
-	<main>
 		<h2>Welcome, {{user.username}}</h2>
 	<hr>
 	<div id="chat-body" class="panel panel-default">
@@ -54,24 +51,8 @@
 		</div>
 	</form>
 	<div id="down"></div>
-	</main>
-	<script type="text/javascript">
-	var myVar;
-myVar=setTimeout(function() {
-  location.reload();
-}, 5000);
-	$('#chat-msg').keyup(function(){
-		if($(this).val() != ''){
-			clearTimeout(myVar);
-		}
-		else{
-			myVar=setTimeout(function() {
-  location.reload();
-}, 5000);
-		}
-	}) ;
-</script>
 	</body>
+	<script src="{% static 'css/chat.js' %}"></script>
 <script>
 	var off=$('#down').offset();
 </script>

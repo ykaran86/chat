@@ -3,19 +3,23 @@ $('#chat-form').on('submit', function(event){
 	$.ajax({
 		url: '/post/',
 		type: 'POST',
-		data: {msgbox : $('#chat-msg').val()},
+		data: {msgbox : $('#chat-msg').val(),
+			csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()			
+			},
 
 		success : function(json){
 			$('#chat-msg').val('');
-			$('#msg-list').append('<li class="text-right list-group-item">' + json.msg + '</li>');
+			$('#msg-list').append('<li class="text-right list-group-item"><small style="color:grey">~' + json.user + '</small><br><span style="font-size:25px">' + json.msg + '</span><br><small style="color:grey">' + json.time + '</small></li>');
+			var off=$('#down').offset();
+			window.scrollBy(0, off.top);
 			var chatlist = document.getElementById('msg-list-div');
 			chatlist.scrollTop=chatlist.scrollHeight;
+			
 		}
 	});
 });
 
-
-function getMessage(){
+function getMessages(){
 	if(!scrolling){
 		$.get('/messages/', function(messages){
 			$('#msg-list').html(messages);
@@ -30,8 +34,8 @@ $(function(){
 	$('#msg-list-div').on('scroll', function(){
 		scrolling=true;
 	});
-	refreshTimer = setInterval(getMessages, 500);
-});
+	refreshTimer = setInterval(getMessages, 2500);
+});2
 
 $(document).ready(function(){
 	
@@ -54,7 +58,7 @@ function getCookie(name) {
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
             // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
             }

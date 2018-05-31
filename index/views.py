@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
 from .models import Chat
 from django.http import HttpResponse, JsonResponse
+from datetime import datetime
 
 @login_required
 def home(request):
@@ -26,11 +27,13 @@ def signup(request):
 
 def Post(request):
     if request.method == "POST":
-        msg = request.POST.get('chat-msg')
+        msg = request.POST.get('msgbox', None)
         c= Chat(user=request.user, message=msg)
+        myDate=datetime.now()
+        formatedDate=myDate.strftime("%b %d, %Y, %I:%M %p")
         if msg !='':
             c.save()
-        return redirect('home')
+        return JsonResponse({ 'msg': msg, 'user': c.user.username, 'time':formatedDate })
     else:
         return HttpResponse('Request must be POST.')
 def Messages(request):
