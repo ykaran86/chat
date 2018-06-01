@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{% block title %}User Dialog{% endblock %}</title>
+            <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</head>
+	<body onload='window.scrollBy(0, off.top)'>
+	<header>
+		<h1>My Site</h1>
+		{% if user.is_authenticated %}
+			<a href="{% url 'logout' %}">logout</a> ||| <a href="{% url 'home' %}">Chat Box</a>
+		{% else %}
+			<a href="{% url 'login' %}">login</a> |||| <a href="{% url 'signup' %}">Sign Up</a>
+		{% endif %}
+		<hr>
+	</header>
+		<h2>Welcome, {{user.username}}</h2>
+	<hr>
+	<div id="dialog-body" class="panel panel-default">
+		<div class="panel-heading"><h3>Dialog Box</h3></div><br>
+		<form id="startconvo-form" method="post" action="/startconvo/">{% csrf_token %}
+			<span class="input-group-btn">
+				<input class="btn btn-default" id="startconvo" type="submit" value="Start Conversation"/>
+			</span>
+		</form>
+			<div id="dialog-list-div" class="panel-body">
+				<ul id="dialog-list" class="list-group">
+					{% for obj in dialog %}
+						{% if obj.user1 == request.user and obj.user2 == "toComputer" %}
+							<li class='text-right list-group-item'><small style="color:grey">~{{ obj.user1 }} </small><br><span style="font-size:25px">{{ obj.dialogue }}</span><br><small style="color:grey">{{ obj.created }}</small></li>
+						{% elif obj.user1 == request.user and obj.user2 == "fromComputer" %}
+							<li class='text-left list-group-item'><small style="color:grey">~Computer </small><br><span style="font-size:25px">{{ obj.dialogue }}</span><br><small style="color:grey">{{ obj.created }} </small></li>
+						{% endif %}
+					{% empty %}
+						<li class='text-right list-group-item'>No Dialogues yet!</li>
+					{% endfor %}
+					
+				</ul>
+			</div>
+	</div>
+	<form id="dialog-form" method="post" action="/dialog/"> 
+		{% csrf_token %}
+		<div id="dialog-bottom" style="bottom:0 ; position: fixed;" class="input-group">
+			<input type="text" id="dialog-msg" name="dialog-msg" class="form-control"/>
+			<span class="input-group-btn">
+				<input class="btn btn-default" id="send" type="submit" value="Send"/>
+			</span>
+		</div>
+	</form>
+	<div id="down"></div>
+	</body>
+	<script src="{% static 'css/dialog.js' %}"></script>
+<script>
+	var off=$('#down').offset();
+</script>
+</html>

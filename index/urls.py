@@ -9,4 +9,7 @@ urlpatterns=[
     url(r'^signup/$', index_views.signup, name='signup'),
     url(r'^post/$', index_views.Post, name='post'),
     url(r'^messages/$', index_views.Messages, name='messages'),
+    url(r'^Dialogue/$', index_views.Dialogue, name='Dialogue'),
+    url(r'^dialog/$', index_views.dialog, name='dialog'),
+    url(r'^startconvo/$', index_views.startconvo, name='startconvo'),
 ]

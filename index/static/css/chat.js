@@ -32,7 +32,7 @@ $(function(){
 		scrolling=true;
 	});
 	refreshTimer = setInterval(getMessages, 2500);
-});2
+});
 
 $(document).ready(function(){
 	

@@ -11,5 +11,26 @@ class Chat(models.Model):
 
     def __str__(self):
         return self.message
-        
 
+class Dialog(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    user1 = models.ForeignKey(User)
+    user2 = models.CharField(max_length=300, default="toComputer")
+    dialogue = models.CharField(max_length=300, null=True)
+    
+    def __unicode__(self):
+        return self.dialogue
+    
+    def __str__(self):
+        return self.dialogue
+        
+class Number(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User)
+    number= models.IntegerField()
+    
+    def __unicode__(self):
+        return self.number
+    
+    def __str__(self):
+        return str(self.number)
