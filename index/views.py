@@ -49,14 +49,13 @@ def Dialogue(request):
 
 def dialog(request):
     if request.method == "POST":
+        i=Number.objects.filter(user=request.user)
         dialog = request.POST.get('dialogbox', None)
         d = Dialog(user1=request.user, dialogue=dialog)
         myDate=datetime.now()
         formatedDate=myDate.strftime("%b %d, %Y, %I:%M %p")
         if dialog !='':
             d.save()
-        me = User.objects.get(username=d.user1.username)
-        i=Number.objects.filter(user=me)
         if(len(i)!=0):
             i=i.last()
             i=i.number
