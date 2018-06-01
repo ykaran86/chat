@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
@@ -54,9 +55,10 @@ def dialog(request):
         formatedDate=myDate.strftime("%b %d, %Y, %I:%M %p")
         if dialog !='':
             d.save()
-        i=Number.objects.all()
+        me = User.objects.get(username=d.user1.username)
+        i=Number.objects.filter(user=me)
         if(len(i)!=0):
-            i=Number.objects.last()
+            i=i.last()
             i=i.number
             if(int(dialog)<i):
                 dialog1 = "Nope! Guess a greater number."
