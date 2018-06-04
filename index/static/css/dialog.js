@@ -13,7 +13,7 @@ $("#dialog-form").on('submit', function(event){
 			$('#dialog-list').append('<li class="text-right list-group-item"><small style="color:grey">~' + json.user + '</small><br><span style="font-size:25px">' + json.dialog + '</span><br><small style="color:grey">' + json.time + '</small></li>');
 			if(document.getElementById('startconvo').disabled == true){
 				$('#dialog-list').append('<li class="text-left list-group-item"><small style="color:grey">~Computer</small><br><span style="font-size:25px">' + json.dialog1 + '</span><br><small style="color:grey">' + json.time + '</small></li>');
-			if(json.dialog1 == "Yupp! you found the number."){
+			if(json.dialog1 == "हाँ! आपको संख्या मिल गयी."){
 				$('#startconvo').removeAttr('disabled');
 }			
 }
@@ -29,7 +29,7 @@ $("#startconvo-form").on('submit', function(event){
         $.ajax({
         url: '/startconvo/',
         type: 'POST',
-        data: {dialogue: "Guess a number between 1 and 101.",
+        data: {dialogue: "1 और 101 के बीच एक संख्या का अनुमान लगाओ.",
                 num: number,
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                 user2name: "fromComputer",            

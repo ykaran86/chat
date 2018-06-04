@@ -30,15 +30,7 @@
 		</form>
 			<div id="dialog-list-div" class="panel-body">
 				<ul id="dialog-list" class="list-group">
-					{% for obj in dialog %}
-						{% if obj.user1 == request.user and obj.user2 == "toComputer" %}
-							<li class='text-right list-group-item'><small style="color:grey">~{{ obj.user1 }} </small><br><span style="font-size:25px">{{ obj.dialogue }}</span><br><small style="color:grey">{{ obj.created }}</small></li>
-						{% elif obj.user1 == request.user and obj.user2 == "fromComputer" %}
-							<li class='text-left list-group-item'><small style="color:grey">~Computer </small><br><span style="font-size:25px">{{ obj.dialogue }}</span><br><small style="color:grey">{{ obj.created }} </small></li>
-						{% endif %}
-					{% empty %}
-						<li class='text-right list-group-item'>No Dialogues yet!</li>
-					{% endfor %}
+					
 					
 				</ul>
 			</div>
@@ -50,9 +42,42 @@
 			<span class="input-group-btn">
 				<input class="btn btn-default" id="send" type="submit" value="Send"/>
 			</span>
+			<img onclick="startDictation()" id="mic" style="border:1px  solid;display:inline-block;right:0px" height="35px" width="35px"  src="{% static 'css/mic-active.png' %}">
 		</div>
 	</form>
 	<div id="down"></div>
+	<script>
+  function startDictation() {
+	$('#send').attr('disabled', 'disabled');
+document.getElementById('dialog-msg').value='';
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+	document.getElementById('mic').src="{% static 'css/mic-inactive.jpg' %}";
+
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.lang = "hi-IN";
+      recognition.start();
+
+      recognition.onresult = function(e) {
+        document.getElementById('dialog-msg').value
+                                 = e.results[0][0].transcript;
+        recognition.stop();
+	document.getElementById('mic').src="{% static 'css/mic-active.png' %}";
+	$('#send').removeAttr('disabled');
+      
+      };
+
+      recognition.onerror = function(e) {
+        recognition.stop();
+	document.getElementById('mic').src="{% static 'css/mic-active.png' %}";
+      }
+
+    }
+  }
+</script>
 	</body>
 	<script src="{% static 'css/dialog.js' %}"></script>
 <script>

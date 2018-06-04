@@ -54,21 +54,18 @@ def dialog(request):
         d = Dialog(user1=request.user, dialogue=dialog)
         myDate=datetime.now()
         formatedDate=myDate.strftime("%b %d, %Y, %I:%M %p")
-        if dialog !='':
-            d.save()
         if(len(i)!=0):
             i=i.last()
             i=i.number
             if(int(dialog)<i):
-                dialog1 = "Nope! Guess a greater number."
+                dialog1 = "नहीं! एक बड़ी संख्या का अनुमान लगाओ."
                 d1 = Dialog(user1=request.user, dialogue=dialog1, user2="fromComputer")
             elif(int(dialog)>i):
-                dialog1 = "Nope! Guess a lesser number."
+                dialog1 = "नहीं! कम संख्या का अनुमान लगाओ."
                 d1 = Dialog(user1=request.user, dialogue=dialog1, user2="fromComputer")
             else:
-                dialog1= "Yupp! you found the number."
+                dialog1= "हाँ! आपको संख्या मिल गयी."
                 d1 = Dialog(user1=request.user, dialogue=dialog1, user2="fromComputer")
-            d1.save()
             return JsonResponse({ 'dialog':dialog, 'user' : d.user1.username, 'time':formatedDate, 'dialog1':dialog1  })
         else:
             return JsonResponse({ 'dialog':dialog, 'user' : d.user1.username, 'time':formatedDate  })
@@ -86,7 +83,6 @@ def startconvo(request):
         myDate=datetime.now()
         formatedDate=myDate.strftime("%b %d, %Y, %I:%M %p")
         if dialog !='':
-            d.save()
             n.save()
         return JsonResponse({ 'dialog':dialog, 'user' : d.user1.username, 'time':formatedDate, 'user2' : d.user2 })
     else:

@@ -4,10 +4,15 @@
 		<meta charset="UTF-8">
 		<title>{% block title %}User Registration{% endblock %}</title>
             <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
         	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+	#mic{
+cursor:pointer;	
+}
+</style>
 	</head>
 	<body onload='window.scrollBy(0, off.top)'>
 	<header>
@@ -38,16 +43,50 @@
 				</ul>
 			</div>
 	</div>
+	
 	<form id="chat-form" method="post" action="/post/"> 
 		{% csrf_token %}
 		<div id="chat-bottom" style="bottom:0 ; position: fixed;" class="input-group">
 			<input type="text" id="chat-msg" name="chat-msg" class="form-control"/>
 			<span class="input-group-btn">
-				<input class="btn btn-default" id="send" type="submit" value="Send"/>
+				<input class="btn btn-default" style="display:inline-block" id="send" type="submit" value="Send"/>
 			</span>
+			<img onclick="startDictation()" id="mic" style="border:1px  solid;display:inline-block;right:0px" height="35px" width="35px"  src="{% static 'css/mic-active.png' %}">
 		</div>
 	</form>
 	<div id="down"></div>
+<script>
+  function startDictation() {
+	$('#send').attr('disabled', 'disabled');
+document.getElementById('chat-msg').value='';
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+	document.getElementById('mic').src="{% static 'css/mic-inactive.jpg' %}";
+
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.lang = "hi-IN";
+      recognition.start();
+
+      recognition.onresult = function(e) {
+        document.getElementById('chat-msg').value
+                                 = e.results[0][0].transcript;
+        recognition.stop();
+	document.getElementById('mic').src="{% static 'css/mic-active.png' %}";
+	$('#send').removeAttr('disabled');
+      
+      };
+
+      recognition.onerror = function(e) {
+        recognition.stop();
+	document.getElementById('mic').src="{% static 'css/mic-active.png' %}";
+      }
+
+    }
+  }
+</script>
 	</body>
 	<script src="{% static 'css/chat.js' %}"></script>
 <script>
