@@ -176,6 +176,7 @@ and it displays it to home.html
 run the following commands:-  
 	` (myvenv)~/chat$ python manage.py makemigrations index `  
 	` (myvenv)~/chat$ python manage.py migrate index `  
+	` (myvenv)~/chat$ python manage.py migrate `  
 	` (myvenv)~/chat$ python manage.py createsuperuser `  
 now provide username,email,password
 
