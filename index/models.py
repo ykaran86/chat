@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Chat(models.Model):
     created= models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User,on_delete=models.DO_NOTHING,)
     message = models.CharField(max_length=300, null=True)
     
     def __unicode__(self):
@@ -14,7 +14,7 @@ class Chat(models.Model):
 
 class Dialog(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    user1 = models.ForeignKey(User)
+    user1 = models.ForeignKey(User,on_delete=models.DO_NOTHING,)
     user2 = models.CharField(max_length=300, default="toComputer")
     dialogue = models.CharField(max_length=300, null=True)
     
@@ -26,7 +26,7 @@ class Dialog(models.Model):
         
 class Number(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User,on_delete=models.DO_NOTHING,)
     number= models.IntegerField()
     
     def __unicode__(self):
