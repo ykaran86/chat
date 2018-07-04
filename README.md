@@ -56,7 +56,7 @@ finally create the virtual environment:
 	` (myvenv) ~/chat$ django-admin startproject login . `  
 	**NOTE:-** “.” at the last is compulsary.
 
-7. now you will have mysite directory inside the chat
+7. now you will have login directory inside the chat
 directory.  
 In that you will find **settings.py** file.  
 In that you will find **ALLOWED_HOSTS** list.  
